@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Bill Generator</h2>
+        <table id="billTable">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="addRow">Add Item</button>
+        <h3>Total Amount: ₹<span id="totalAmount">0.00</span></h3>
+ <button onclick="window.print()" class="print">Print</button>
+    </div>
+   
+    <script>
+        $(document).ready(function() {
+            $("#addRow").click(function() {
+                let row = `<tr>
+                    <td><input type="text" class="itemName"></td>
+                    <td><input type="number" class="quantity" value="1" min="1"></td>
+                    <td><input type="number" class="price" value="0" min="0"></td>
+                    <td class="total">0.00</td>
+                    <td><button class="removeRow">Remove</button></td>
+                </tr>`;
+                $("#billTable tbody").append(row);
+            });
+
+            $(document).on("input", ".quantity, .price", function() {
+                let row = $(this).closest("tr");
+                let quantity = parseFloat(row.find(".quantity").val()) || 0;
+                let price = parseFloat(row.find(".price").val()) || 0;
+                let total = quantity * price;
+                row.find(".total").text(total.toFixed(2));
+                updateTotalAmount();
+            });
+
+            $(document).on("click", ".removeRow", function() {
+                $(this).closest("tr").remove();
+                updateTotalAmount();
+            });
+
+            function updateTotalAmount() {
+       ₹         let totalAmount = 0;
+                $(".total").each(function() {
+                    totalAmount += parseFloat($(this).text()) || 0;
+                });
+                $("#totalAmount").text(totalAmount.toFixed(2));
+            }
+        });
+    </script>
+
+</body>
+</html>

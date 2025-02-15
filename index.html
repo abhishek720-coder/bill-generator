@@ -34,16 +34,6 @@
             padding: 10px;
             text-align: center;
         }
-.print {
-             margin-top: 10px;
-            padding: 10px;
-            background: green;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-
-        }
         button {
             margin-top: 10px;
             padding: 10px;
@@ -76,7 +66,7 @@
             </tbody>
         </table>
         <button id="addRow">Add Item</button>
-        <h3>Total Amount: $<span id="totalAmount">0.00</span></h3>
+        <h3>Total Amount: ₹<span id="totalAmount">0.00</span></h3>
  <button onclick="window.print()" class="print">Print</button>
     </div>
    
@@ -108,7 +98,7 @@
             });
 
             function updateTotalAmount() {
-                let totalAmount = 0;
+       ₹         let totalAmount = 0;
                 $(".total").each(function() {
                     totalAmount += parseFloat($(this).text()) || 0;
                 });

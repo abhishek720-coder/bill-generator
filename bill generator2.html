@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn {
+            padding: 10px 15px;
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Bill Generator</h2>
+        <div class="no-print">
+            <input type="text" id="item" placeholder="Item Name">
+            <input type="number" id="price" placeholder="Price">
+            <input type="number" id="quantity" placeholder="Quantity">
+            <button class="btn" onclick="addItem()">Add Item</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="billTable"></tbody>
+        </table>
+        <h3>Total Amount: ₹<span id="totalAmount">0</span></h3>
+        <button class="btn no-print" onclick="printBill()">Print Bill</button>
+    </div>
+
+    <script>
+        let totalAmount = 0;
+
+        function addItem() {
+            let item = document.getElementById("item").value;
+            let price = document.getElementById("price").value;
+            let quantity = document.getElementById("quantity").value;
+            
+            if (item && price && quantity) {
+                let total = price * quantity;
+                totalAmount += total;
+                
+                let table = document.getElementById("billTable");
+                let row = table.insertRow();
+                row.innerHTML = `<td>${item}</td><td>${price}</td><td>${quantity}</td><td>${total}</td>`;
+                
+                document.getElementById("totalAmount").innerText = totalAmount;
+                document.getElementById("item").value = "";
+                document.getElementById("price").value = "";
+                document.getElementById("quantity").value = "";
+            } else {
+                alert("Please fill all fields");
+            }
+        }
+
+        function printBill() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
